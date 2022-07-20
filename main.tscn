@@ -1,0 +1,147 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://sway.gd" type="Script" id=1]
+[ext_resource path="res://noSettings.gd" type="Script" id=2]
+[ext_resource path="res://wallpapers.gd" type="Script" id=4]
+
+[node name="main" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="noSettings" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Label" type="Label" parent="noSettings"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -367.0
+margin_top = -91.0
+margin_right = -1.0
+margin_bottom = -60.0
+rect_scale = Vector2( 2, 2 )
+text = "Please enter the location of your sway config file. This will only have to be done once."
+autowrap = true
+
+[node name="input" type="LineEdit" parent="noSettings"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -366.0
+margin_top = -12.0
+margin_right = 26.0
+margin_bottom = 12.0
+
+[node name="button" type="Button" parent="noSettings"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 35.0
+margin_top = -12.0
+margin_right = 126.0
+margin_bottom = 12.0
+text = "Select File..."
+
+[node name="fileSelect" type="FileDialog" parent="noSettings"]
+margin_right = 315.0
+margin_bottom = 130.0
+window_title = "Open a File"
+resizable = true
+mode = 0
+access = 2
+show_hidden_files = true
+current_dir = "/home/karl/Documents/Code/Godot/SwayConf"
+current_path = "/home/karl/Documents/Code/Godot/SwayConf/"
+
+[node name="acceptButton" type="Button" parent="noSettings"]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -107.0
+margin_top = -52.0
+margin_right = -8.0
+margin_bottom = -8.0
+text = "Accept"
+
+[node name="menu" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="navbar" type="Control" parent="menu"]
+anchor_right = 1.0
+margin_bottom = 48.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="bg" type="ColorRect" parent="menu/navbar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.215686, 0.215686, 0.215686, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="items" type="ScrollContainer" parent="menu/navbar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 10.0
+margin_bottom = -10.0
+scroll_vertical_enabled = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="menu/navbar/items"]
+margin_right = 83.0
+margin_bottom = 20.0
+
+[node name="wallpaperButton" type="Button" parent="menu/navbar/items/HBoxContainer"]
+margin_right = 83.0
+margin_bottom = 20.0
+text = "Wallpapers"
+
+[node name="menus" type="Control" parent="menu"]
+anchor_top = 0.08
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.8147e-06
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="wallpapers" type="Control" parent="menu/menus"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="scrollbox" type="ScrollContainer" parent="menu/menus/wallpapers"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="container" type="VBoxContainer" parent="menu/menus/wallpapers/scrollbox"]
+alignment = 1
+
+[connection signal="loading_finished" from="." to="menu/menus/wallpapers" method="_on_main_loading_finished"]
+[connection signal="accepted" from="noSettings" to="." method="_on_noSettings_accepted"]
+[connection signal="text_changed" from="noSettings/input" to="noSettings" method="_on_input_text_changed"]
+[connection signal="pressed" from="noSettings/button" to="noSettings" method="_on_button_pressed"]
+[connection signal="file_selected" from="noSettings/fileSelect" to="noSettings" method="_on_fileSelect_file_selected"]
+[connection signal="pressed" from="noSettings/acceptButton" to="noSettings" method="_on_acceptButton_pressed"]
